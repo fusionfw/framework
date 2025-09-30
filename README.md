@@ -43,14 +43,14 @@ QUEUE_DRIVER=file
 
 ## 📊 System Requirements
 
-| Requirement     | Minimum               | Recommended             |
-| --------------- | --------------------- | ----------------------- |
-| **PHP Version** | 8.0+                  | 8.1+                    |
-| **Memory**      | 128MB                 | 256MB+                  |
-| **Extensions**  | PDO, JSON, OpenSSL    | All standard extensions |
+| Requirement     | Minimum                              | Recommended                |
+| --------------- | ------------------------------------ | -------------------------- |
+| **PHP Version** | 8.0+                                 | 8.1+                       |
+| **Memory**      | 128MB                                | 256MB+                     |
+| **Extensions**  | PDO, JSON, OpenSSL                   | All standard extensions    |
 | **Database**    | MySQL 5.7+, SQLite 3, PostgreSQL 10+ | MySQL 8.0+, PostgreSQL 13+ |
-| **OS**          | Linux, macOS, Windows | Linux (production)      |
-| **Web Server**  | Apache, Nginx         | Nginx (production)      |
+| **OS**          | Linux, macOS, Windows                | Linux (production)         |
+| **Web Server**  | Apache, Nginx                        | Nginx (production)         |
 
 ## 🚀 Quick Start
 
@@ -533,7 +533,7 @@ cp .env.example .env
 ### 4. Set Permissions
 
 ```bash
-chmod +x flexify
+chmod +x fusion
 chmod -R 755 storage/
 ```
 
@@ -555,9 +555,8 @@ php -S localhost:8000 -t public
 # Menggunakan Fusion CLI (recommended)
 ./fusion make:module Blog
 
-# Legacy commands (deprecated, akan dihapus di versi 2.0)
+# Create module
 ./fusion make:module Blog
-./flexify hmf make:module Blog
 ```
 
 ### 2. Membuat Komponen
@@ -578,9 +577,8 @@ php -S localhost:8000 -t public
 # Middleware
 ./fusion make:middleware AuthMiddleware
 
-# Legacy commands (deprecated)
+# Create components
 ./fusion make:controller PostController Blog
-./flexify hmf make:controller PostController Blog
 ```
 
 ### 3. Routing
@@ -628,7 +626,7 @@ class PostController extends Controller
         return $this->success($post, 'Post created successfully');
     }
 
-    // Flight style compatibility
+    // Alternative view method
     public function renderView(string $view, array $data = []): void
     {
         $this->render($view, $data);
@@ -649,13 +647,13 @@ class Post extends Model
     protected $table = 'posts';
     protected $fillable = ['title', 'content', 'slug', 'published'];
 
-    // Flexify style methods
+    // Standard methods
     public static function all(): array
     {
         return parent::all();
     }
 
-    // Flight style compatibility
+    // Alternative method
     public static function findAll(): array
     {
         return static::all();
@@ -690,7 +688,7 @@ class PostService extends Service
 
     public function createPost(array $data)
     {
-        // Flight style validation
+        // Validation
         $errors = $this->validate($data, [
             'title' => 'required|min:3|max:255',
             'content' => 'required|min:10'
@@ -721,13 +719,13 @@ class PostRepository extends Repository
     protected $table = 'posts';
     protected $primaryKey = 'id';
 
-    // Flexify style methods
+    // Standard methods
     public function all(): array
     {
         return parent::all();
     }
 
-    // Flight style compatibility
+    // Alternative method
     public function findAll(): array
     {
         return $this->all();
@@ -779,13 +777,10 @@ class PostRepository extends Repository
 ./fusion plugin:deactivate <plugin-name>
 ```
 
-### **Legacy Commands (Deprecated)**
+### **All Commands**
 
 ```bash
-# ⚠️ WARNING: Commands ini akan dihapus di versi 2.0
-# Gunakan ./fusion sebagai gantinya
-
-# Legacy Flexify commands
+# Development
 ./fusion serve [host] [port]
 ./fusion migrate
 ./fusion make:controller <ControllerName> [Module]
@@ -794,16 +789,6 @@ class PostRepository extends Repository
 ./fusion make:repository <RepositoryName> [Module]
 ./fusion make:middleware <MiddlewareName>
 ./fusion make:module <ModuleName>
-
-# Legacy HMF commands
-./flexify hmf serve [host] [port]
-./flexify hmf migrate
-./flexify hmf make:controller <ControllerName> [Module]
-./flexify hmf make:model <ModelName> [Module]
-./flexify hmf make:service <ServiceName> [Module]
-./flexify hmf make:repository <RepositoryName> [Module]
-./flexify hmf make:middleware <MiddlewareName>
-./flexify hmf make:module <ModuleName>
 ```
 
 ## 🔒 Security Features
@@ -823,7 +808,7 @@ class PostRepository extends Repository
 $this->logger()->info('User logged in', ['user_id' => $userId]);
 $this->logger()->error('Database error', ['error' => $errorMessage]);
 
-// Flight style logging
+// Alternative logging
 $this->log('User action performed', 'info');
 ```
 
@@ -1411,28 +1396,27 @@ php fusion benchmark http://localhost:8000 10 100
 
 ## 🎯 Perbandingan dengan Framework Lain
 
-| Fitur               | Fusion     | Laravel    | CodeIgniter 4 | Symfony    | Flight (HMF) | Flexify    |
-| ------------------- | ---------- | ---------- | ------------- | ---------- | ------------ | ---------- |
-| **Learning Curve**  | ⭐⭐⭐⭐⭐ | ⭐⭐       | ⭐⭐⭐⭐      | ⭐⭐       | ⭐⭐⭐⭐⭐   | ⭐⭐⭐     |
-| **Performance**     | ⭐⭐⭐⭐⭐ | ⭐⭐⭐     | ⭐⭐⭐⭐      | ⭐⭐⭐     | ⭐⭐⭐⭐     | ⭐⭐⭐⭐⭐ |
-| **Security**        | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐   | ⭐⭐⭐        | ⭐⭐⭐⭐   | ⭐⭐⭐⭐     | ⭐⭐⭐⭐⭐ |
-| **Modularity**      | ⭐⭐⭐⭐⭐ | ⭐⭐⭐     | ⭐⭐⭐        | ⭐⭐⭐⭐⭐ | ⭐⭐⭐       | ⭐⭐⭐⭐⭐ |
-| **CLI Tools**       | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐        | ⭐⭐⭐⭐   | ⭐⭐⭐       | ⭐⭐⭐⭐⭐ |
-| **Plugin System**   | ⭐⭐⭐⭐⭐ | ⭐⭐⭐     | ⭐⭐          | ⭐⭐⭐⭐   | ❌           | ⭐⭐⭐⭐⭐ |
-| **Benchmarking**    | ⭐⭐⭐⭐⭐ | ⭐⭐       | ⭐⭐          | ⭐⭐       | ❌           | ⭐⭐⭐⭐⭐ |
-| **Starter Kits**    | ⭐⭐⭐⭐⭐ | ⭐⭐⭐     | ⭐⭐          | ⭐⭐       | ❌           | ⭐⭐⭐⭐⭐ |
-| **Backward Compat** | ⭐⭐⭐⭐⭐ | ❌         | ❌            | ❌         | ⭐⭐⭐⭐⭐   | ❌         |
+| Fitur               | Fusion     | Laravel    | CodeIgniter 4 | Symfony    |
+| ------------------- | ---------- | ---------- | ------------- | ---------- |
+| **Learning Curve**  | ⭐⭐⭐⭐⭐ | ⭐⭐       | ⭐⭐⭐⭐      | ⭐⭐       |
+| **Performance**     | ⭐⭐⭐⭐⭐ | ⭐⭐⭐     | ⭐⭐⭐⭐      | ⭐⭐⭐     |
+| **Security**        | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐   | ⭐⭐⭐        | ⭐⭐⭐⭐   |
+| **Modularity**      | ⭐⭐⭐⭐⭐ | ⭐⭐⭐     | ⭐⭐⭐        | ⭐⭐⭐⭐⭐ |
+| **CLI Tools**       | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐        | ⭐⭐⭐⭐   |
+| **Plugin System**   | ⭐⭐⭐⭐⭐ | ⭐⭐⭐     | ⭐⭐          | ⭐⭐⭐⭐   |
+| **Benchmarking**    | ⭐⭐⭐⭐⭐ | ⭐⭐       | ⭐⭐          | ⭐⭐       |
+| **Queue System**    | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐   | ⭐⭐          | ⭐⭐⭐     |
 
 ## 🏆 Keunggulan Fusion Framework
 
-- **Best of Both Worlds** - Menggabungkan keunggulan Flexify dan Flight
+- **Modern Architecture** - Built with PHP 8.0+ and PSR-4 standards
 - **Enterprise-Grade** - Siap untuk production dengan fitur lengkap
 - **Developer-Friendly** - Mudah dipelajari dan digunakan
 - **High Performance** - Optimized untuk kecepatan
 - **Modular Architecture** - Scalable dan maintainable
 - **Plugin Ecosystem** - Extensible dengan plugin system
-- **Backward Compatibility** - Mendukung kode dari kedua framework asli
-- **Dual CLI Support** - Fleksibilitas dalam penggunaan CLI
+- **Enterprise Queue System** - 6 drivers untuk berbagai kebutuhan
+- **Multiple Database Support** - MySQL, SQLite, PostgreSQL
 - **Clean Code** - Kode yang bersih dan mudah dipahami
 - **Indonesian-First** - Dibuat untuk developer Indonesia
 
@@ -1454,52 +1438,11 @@ Jika Anda memiliki pertanyaan atau butuh bantuan, silakan buat issue di reposito
 2. **Run `./fusion migrate`** to set up the database
 3. **Start the server** with `./fusion serve`
 4. **Create your first module** with `./fusion make:module YourModule`
-5. **Try legacy compatibility** with `./flexify make:controller TestController` (deprecated)
+5. **Start building** your application with modern PHP features
 
-## ⚠️ Important Notice - CLI Changes
+## 🚀 **Fusion Framework** - Modern PHP Framework
 
-**Fusion Framework** sekarang menggunakan CLI `fusion` sebagai command utama.
-
-### ✅ **Recommended (New)**
-
-```bash
-./fusion serve
-./fusion make:module Blog
-./fusion make:controller PostController Blog
-```
-
-### ⚠️ **Legacy (Deprecated)**
-
-```bash
-# Masih berfungsi tapi akan menampilkan warning
-./flexify serve                    # ⚠️ Deprecated, gunakan ./fusion
-./flexify hmf make:module Blog     # ⚠️ Deprecated, gunakan ./fusion
-```
-
-**Timeline:**
-
-- **Versi 1.x**: Legacy commands masih didukung dengan warning
-- **Versi 2.0**: Legacy commands akan dihapus sepenuhnya
-
-## 🔄 Migration Guide
-
-### Dari Flexify ke Fusion
-
-- Semua kode Flexify akan berjalan tanpa perubahan
-- CLI commands tetap sama
-- Fitur baru tersedia secara otomatis
-
-### Dari Flight (HMF) ke Fusion
-
-- Gunakan `./flexify hmf` untuk perintah yang familiar
-- Core classes sudah enhanced dengan fitur Flexify
-- Migrasi bertahap ke fitur Fusion yang lebih advanced
-
----
-
-**Fusion Framework** - Hasil penggabungan **Flexify** + **Flight (HMF)** dengan ❤️ untuk developer PHP Indonesia
-
-**Status: Production Ready & Best of Both Worlds!** 🚀✨
+**Status: Production Ready & Modern Architecture!** 🚀✨
 
 ---
 
@@ -1521,9 +1464,9 @@ Jika Anda memiliki pertanyaan atau butuh bantuan, silakan buat issue di reposito
 ./fusion benchmark                # Run benchmarks
 ./fusion plugin:list              # List plugins
 
-# Legacy Commands (Deprecated)
-./flexify serve                   # ⚠️ Deprecated
-./flexify hmf make:controller Post # ⚠️ Deprecated
+# All Commands
+./fusion serve                   # Start server
+./fusion make:controller Post    # Create controller
 ```
 
 ### Core Classes Usage
@@ -1532,21 +1475,21 @@ Jika Anda memiliki pertanyaan atau butuh bantuan, silakan buat issue di reposito
 // Controller
 class MyController extends Controller {
     public function index() {
-        return $this->view('module.view', $data);  // Flexify style
-        $this->render('module/view', $data);       // Flight style
+        return $this->view('module.view', $data);  // Standard method
+        $this->render('module/view', $data);       // Alternative method
     }
 }
 
 // Model
 class MyModel extends Model {
-    // Both styles work
-    MyModel::all();           // Flexify style
-    MyModel::findAll();       // Flight style
+    // Both methods work
+    MyModel::all();           // Standard method
+    MyModel::findAll();       // Alternative method
 }
 
 // Service
 class MyService extends Service {
-    // Enhanced with Flight validation
+    // Enhanced validation
     $errors = $this->validate($data, $rules);
     $clean = $this->sanitize($data);
 }

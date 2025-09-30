@@ -23,8 +23,7 @@
         "psr-4": {
             "Fusion\\Core\\": "core/",
             "App\\": "app/",
-            "Fusion\\Plugins\\": "plugins/",
-            "Flexify\\Core\\": "core/"  
+            "Fusion\\Plugins\\": "plugins/"
         }
     },
     "autoload-dev": {

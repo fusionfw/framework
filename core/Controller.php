@@ -7,7 +7,7 @@ use Fusion\Core\Response;
 use Fusion\Core\Container;
 
 /**
- * Base Controller Class - Fusion of Flexify + Flight
+ * Base Controller Class - Fusion Framework
  * Combines the best features from both frameworks
  */
 abstract class Controller
@@ -23,7 +23,7 @@ abstract class Controller
     }
 
     /**
-     * Return JSON response (Flexify style)
+     * Return JSON response
      */
     protected function json($data, int $statusCode = 200): Response
     {
@@ -31,7 +31,7 @@ abstract class Controller
     }
 
     /**
-     * Return view response (Flexify style)
+     * Return view response
      */
     protected function view(string $view, array $data = [], int $statusCode = 200): Response
     {
@@ -39,7 +39,7 @@ abstract class Controller
     }
 
     /**
-     * Return view response (Flight style - for backward compatibility)
+     * Return view response (alternative method)
      */
     protected function render(string $view, array $data = []): void
     {
@@ -91,7 +91,7 @@ abstract class Controller
     }
 
     /**
-     * Get input data (Flight style)
+     * Get input data
      */
     protected function input(string $key, $default = null)
     {
@@ -107,7 +107,7 @@ abstract class Controller
     }
 
     /**
-     * Validate request data (Enhanced with Flight features)
+     * Validate request data
      */
     protected function validate(array $rules, array $data = null): array
     {
@@ -178,7 +178,7 @@ abstract class Controller
     }
 
     /**
-     * CSRF token generation (Flight style)
+     * CSRF token generation
      */
     protected function csrf(): string
     {
@@ -190,7 +190,7 @@ abstract class Controller
     }
 
     /**
-     * CSRF token verification (Flight style)
+     * CSRF token verification
      */
     protected function verifyCsrf(): bool
     {
@@ -199,7 +199,7 @@ abstract class Controller
     }
 
     /**
-     * Get view path (Flight style)
+     * Get view path
      */
     private function getViewPath(string $view): string
     {

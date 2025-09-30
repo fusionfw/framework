@@ -84,12 +84,19 @@ class Application
 
         // Process the request through router
         $router = new Router();
-
+        
         // Add default routes
         $router->get('/', function () {
-            return new Response('<h1>Fusion Framework - HMS SaaS</h1><p>Framework berhasil berjalan!</p>');
+            $landingPath = dirname(__DIR__) . '/public/landing.html';
+            if (is_file($landingPath)) {
+                $content = file_get_contents($landingPath);
+                $resp = new Response($content, 200);
+                $resp->setHeader('Content-Type', 'text/html; charset=UTF-8');
+                return $resp;
+            }
+            return new Response('<h1>Fusion Framework</h1><p>Landing page not found.</p>');
         });
-
+        
         $router->get('/health', function () {
             return (new Response())->json(['status' => 'ok', 'framework' => 'Fusion', 'version' => '1.1.0']);
         });

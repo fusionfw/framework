@@ -1,87 +1,64 @@
 # Fusion Framework
 
-**Fusion Framework** adalah framework PHP mandiri dengan dua mode runtime: Lite dan Enterprise. Versi ini telah direfaktor dari gabungan Flexify/Flight menjadi framework independen yang berdiri sendiri.
+**Fusion Framework** adalah framework PHP modern dengan arsitektur modular yang powerful. Dibangun dengan PHP 8.0+ dan mengikuti standar PSR-4 untuk performa dan maintainability yang optimal.
 
 ## 🚀 Tentang Fusion Framework
 
-Fusion mendukung dua mode runtime yang dapat dipilih melalui `.env`:
+Fusion Framework adalah framework PHP modern yang dirancang untuk developer yang menginginkan:
 
-- **Lite Mode (APP_MODE=lite)**: Clean MVC + Service + Repository, middleware & konfigurasi minimal, CLI sederhana. Cocok untuk pemula dan aplikasi kecil.
-- **Enterprise Mode (APP_MODE=enterprise)**: Fitur lengkap seperti Plugin System, AuthManager, Multi-driver Cache, Benchmark, Starter Kits, CLI advanced. Cocok untuk aplikasi enterprise/SaaS.
+- **Modern PHP 8.0+** - Menggunakan fitur terbaru PHP untuk performa optimal
+- **PSR-4 Compliant** - Standar autoloading yang professional
+- **Modular Architecture** - Arsitektur yang scalable dan maintainable
+- **Enterprise Queue System** - 6 driver queue untuk berbagai kebutuhan
+- **Clean MVC Pattern** - Controller, Model, Service, Repository yang mudah dipahami
+- **Comprehensive CLI** - Command line tools yang powerful
+- **Production Ready** - Siap untuk development hingga production
 
 Contoh konfigurasi `.env` dasar:
 
 ```
 APP_NAME=FusionFramework
-APP_MODE=lite   # lite | enterprise
 APP_ENV=development
 APP_DEBUG=true
 APP_URL=http://localhost
+QUEUE_DRIVER=file
 ```
-
-Fusion Framework adalah framework PHP yang powerful dengan:
-
-- **Dual-Mode Architecture** - Lite mode untuk pemula, Enterprise mode untuk aplikasi besar
-- **Clean MVC Pattern** - Controller, Model, Service, Repository yang mudah dipahami
-- **Plugin System** - Arsitektur yang dapat diperluas (Enterprise mode)
-- **Multi-Driver Support** - Cache, Session, Database dengan multiple drivers
-- **Comprehensive CLI** - Command line tools yang adaptif sesuai mode
-- **Production Ready** - Siap untuk development hingga production
 
 ## 🎯 Fitur Utama
 
-### **Fusion Lite Mode:**
+### **Core Features:**
 
-- **Clean MVC** - Controller, Model, View yang sederhana
-- **Service Layer** - Enkapsulasi business logic
-- **Repository Pattern** - Abstraksi data access
-- **Basic CLI** - Command line tools essential
-- **Minimal Dependencies** - Ringan dan cepat
-- **Perfect for Learning** - Ideal untuk pemula
+- **Modern PHP 8.0+** - Menggunakan fitur terbaru PHP
+- **PSR-4 Autoloading** - Standar professional untuk autoloading
+- **Modular Architecture** - Arsitektur yang scalable dan maintainable
+- **Clean MVC Pattern** - Controller, Model, Service, Repository
+- **Enterprise Queue System** - 6 driver queue (sync, file, redis, beanstalk, rabbitmq, sqs)
+- **Comprehensive CLI** - Command line tools yang powerful
+- **Database Migrations** - Sistem migrasi yang robust
+- **Caching System** - Multi-driver cache support
+- **Authentication** - Complete auth system
+- **Plugin System** - Extensible architecture
+- **Security Features** - CSRF, XSS protection, input validation
+- **Performance Optimized** - Built-in benchmarking tools
 
-### **Fusion Enterprise Mode:**
+## 📊 System Requirements
 
-- **Plugin System** - Arsitektur yang dapat diperluas
-- **Benchmark Tools** - Built-in performance measurement
-- **Multi-driver Support** - Cache, Session, Database drivers
-- **Advanced CLI** - Command line tools comprehensive
-- **Auth System** - Complete authentication & authorization
-- **Production Ready** - Fitur lengkap untuk aplikasi besar
-
-### **Shared Features:**
-
-- **Dual-Mode Runtime** - Switch mode via `.env`
-- **Modern Architecture** - PSR-4 autoloading, DI Container
-- **Clean Code** - Kode yang bersih dan mudah dipahami
-- **Fast Performance** - Optimized untuk kecepatan
-- **Easy Learning** - Learning curve yang rendah
-
-## 📊 Perbandingan Mode
-
-| Fitur                  | Lite Mode              | Enterprise Mode                  |
-| ---------------------- | ---------------------- | -------------------------------- |
-| **Target User**        | Pemula, Aplikasi Kecil | Enterprise, SaaS, Aplikasi Besar |
-| **MVC Pattern**        | ✅ Basic               | ✅ Advanced                      |
-| **Service Layer**      | ✅                     | ✅                               |
-| **Repository Pattern** | ✅                     | ✅                               |
-| **Plugin System**      | ❌                     | ✅                               |
-| **Auth System**        | ❌                     | ✅                               |
-| **Cache System**       | ❌                     | ✅                               |
-| **Session Management** | ❌                     | ✅                               |
-| **Benchmark Tools**    | ❌                     | ✅                               |
-| **CLI Commands**       | Basic (15 commands)    | Full (25+ commands)              |
-| **Memory Usage**       | ~2MB                   | ~5MB                             |
-| **Startup Time**       | ~50ms                  | ~100ms                           |
-| **Dependencies**       | Minimal                | Full                             |
+| Requirement | Minimum | Recommended |
+| ----------- | ------- | ----------- |
+| **PHP Version** | 8.0+ | 8.1+ |
+| **Memory** | 128MB | 256MB+ |
+| **Extensions** | PDO, JSON, OpenSSL | All standard extensions |
+| **OS** | Linux, macOS, Windows | Linux (production) |
+| **Web Server** | Apache, Nginx | Nginx (production) |
 
 ## 🚀 Quick Start
 
 ### **Installation**
 
-1. **Clone atau Download Framework**
+1. **Clone Repository**
 
 ```bash
-git clone https://github.com/your-repo/fusion-framework.git
+git clone https://github.com/mwpn/fusion-framework.git
 cd fusion-framework
 ```
 
@@ -95,9 +72,7 @@ composer install
 
 ```bash
 cp env.example .env
-# Edit .env and set your preferred mode
-# APP_MODE=lite        # For beginners/small apps
-# APP_MODE=enterprise  # For advanced/enterprise apps
+# Edit .env sesuai kebutuhan Anda
 php fusion key:generate
 ```
 
@@ -111,11 +86,7 @@ php fusion db:seed
 5. **Start Development Server**
 
 ```bash
-# Lite mode (default)
 php fusion serve
-
-# Or force enterprise mode
-php fusion enterprise serve
 ```
 
 6. **Access Application**
@@ -124,61 +95,63 @@ php fusion enterprise serve
 http://localhost:8000
 ```
 
-### **Mode Selection**
-
-Fusion Framework mendukung dua mode yang dapat dipilih:
-
-**Lite Mode (Default):**
+### **Create Your First Module**
 
 ```bash
-# Set di .env
-APP_MODE=lite
+# Create a new module
+php fusion make:module Blog
 
-# Atau paksa via CLI
-php fusion lite <command>
-```
+# Create controller
+php fusion make:controller PostController Blog
 
-**Enterprise Mode:**
+# Create model
+php fusion make:model Post Blog
 
-```bash
-# Set di .env
-APP_MODE=enterprise
+# Create service
+php fusion make:service PostService Blog
 
-# Atau paksa via CLI
-php fusion enterprise <command>
-```
-
-**Mode Switching:**
-
-```bash
-# Switch mode di .env
-echo "APP_MODE=enterprise" >> .env
-
-# Atau paksa mode untuk command tertentu
-php fusion enterprise serve
-php fusion lite make:controller TestController
+# Create repository
+php fusion make:repository PostRepository Blog
 ```
 
 ### **Available Commands**
 
-**Lite Mode Commands:**
+**Core Commands:**
 
 ```bash
 php fusion help                    # Show help
 php fusion serve                   # Start server
-php fusion make:controller <name>  # Create controller
-php fusion make:model <name>       # Create model
-php fusion make:service <name>     # Create service
-php fusion make:repository <name>  # Create repository
-php fusion make:module <name>      # Create module
 php fusion migrate                 # Run migrations
+php fusion migrate:status          # Show migration status
 php fusion db:seed                 # Run seeders
 ```
 
-**Enterprise Mode Commands:**
+**Code Generation:**
 
 ```bash
-# Semua Lite commands +
+php fusion make:controller <name> [module]  # Create controller
+php fusion make:model <name> [module]       # Create model
+php fusion make:service <name> [module]     # Create service
+php fusion make:repository <name> [module]  # Create repository
+php fusion make:module <name>               # Create module
+php fusion make:middleware <name>           # Create middleware
+php fusion make:job <name>                  # Create job
+```
+
+**Queue Commands:**
+
+```bash
+php fusion queue:work [--driver=driver]     # Start queue worker
+php fusion queue:push <job> [--driver=driver] # Push job to queue
+php fusion queue:failed [--driver=driver]   # Show failed jobs
+php fusion queue:retry <job-id> [--driver=driver] # Retry failed job
+php fusion queue:clear [--driver=driver]    # Clear queue
+php fusion queue:drivers                    # Show available drivers
+```
+
+**Advanced Commands:**
+
+```bash
 php fusion plugin:list             # List plugins
 php fusion plugin:install <name>   # Install plugin
 php fusion benchmark               # Run benchmarks
@@ -215,7 +188,7 @@ php fusion make:repository PostRepository Blog
 <?php
 namespace App\Modules\Blog\Controllers;
 
-use Fusion\Core\Controller;
+use Fusion\Controller;
 
 class PostController extends Controller
 {
@@ -234,7 +207,7 @@ class PostController extends Controller
 <?php
 namespace App\Modules\Blog\Controllers;
 
-use Fusion\Core\Controller;
+use Fusion\Controller;
 
 class PostController extends Controller
 {
@@ -254,7 +227,7 @@ class PostController extends Controller
 
 ```php
 // Check current mode
-$app = \Fusion\Core\Application::getInstance();
+$app = \Fusion\Application::getInstance();
 $mode = $app->getMode();
 
 if ($mode === 'enterprise') {
@@ -371,9 +344,9 @@ php fusion enterprise benchmark
 <?php
 namespace App\Modules\Blog\Controllers;
 
-use Fusion\Core\Controller;
-use Fusion\Core\Request;
-use Fusion\Core\Response;
+use Fusion\Controller;
+use Fusion\Request;
+use Fusion\Response;
 
 class PostController extends Controller
 {
@@ -398,7 +371,7 @@ class PostController extends Controller
 <?php
 namespace App\Modules\Blog\Models;
 
-use Fusion\Core\Model;
+use Fusion\Model;
 
 class Post extends Model
 {
@@ -418,7 +391,7 @@ class Post extends Model
 <?php
 namespace App\Modules\Blog\Services;
 
-use Fusion\Core\Service;
+use Fusion\Service;
 
 class PostService extends Service
 {
@@ -447,32 +420,22 @@ class PostService extends Service
 
 ```
 fusion/
-├── app/
-│   ├── modules/
-│   │   └── {Module}/
-│   │       ├── Controllers/
-│   │       ├── Models/
-│   │       ├── Services/
-│   │       ├── Repositories/
-│   │       ├── Views/
-│   │       └── routes.php
-│   └── Middleware/
-├── core/
+├── src/                      ← Core framework (PSR-4 compliant)
 │   ├── Application.php
 │   ├── Autoloader.php
 │   ├── Container.php
 │   ├── Router.php
 │   ├── Request.php
 │   ├── Response.php
-│   ├── Controller.php          ← Enhanced dengan Flight features
-│   ├── Model.php              ← Enhanced dengan Flight features
-│   ├── Service.php            ← Enhanced dengan Flight features
-│   ├── Repository.php         ← Enhanced dengan Flight features
+│   ├── Controller.php
+│   ├── Model.php
+│   ├── Service.php
+│   ├── Repository.php
 │   ├── Middleware.php
 │   ├── Security.php
 │   ├── Config.php
 │   ├── Logger.php
-│   ├── Console.php            ← Enhanced dengan HMF compatibility
+│   ├── Console.php
 │   ├── Database/
 │   │   ├── Connection.php
 │   │   ├── QueryBuilder.php
@@ -491,27 +454,52 @@ fusion/
 │   ├── Plugin/
 │   │   ├── PluginInterface.php
 │   │   └── PluginManager.php
+│   ├── Queue/
+│   │   ├── Job.php
+│   │   ├── QueueManager.php
+│   │   ├── QueueDriverInterface.php
+│   │   └── Drivers/
+│   │       ├── SyncQueueDriver.php
+│   │       ├── FileQueueDriver.php
+│   │       ├── RedisQueueDriver.php
+│   │       ├── BeanstalkQueueDriver.php
+│   │       ├── RabbitMQQueueDriver.php
+│   │       └── SqsQueueDriver.php
 │   └── Benchmark/
 │       └── BenchmarkRunner.php
+├── app/                      ← Application code
+│   ├── modules/
+│   │   └── {Module}/
+│   │       ├── Controllers/
+│   │       ├── Models/
+│   │       ├── Services/
+│   │       ├── Repositories/
+│   │       ├── Views/
+│   │       └── routes.php
+│   └── Middleware/
 ├── config/
 │   ├── app.php
-│   └── database.php
-├── plugins/
+│   ├── database.php
+│   └── queue.php
+├── plugins/                  ← Plugin modules
 │   ├── Payment/
 │   │   └── Payment.php
 │   └── Queue/
 │       └── Queue.php
 ├── storage/
 │   ├── logs/
-│   └── cache/
+│   ├── cache/
+│   └── queue/
 ├── database/
-│   └── migrations/
+│   ├── migrations/
+│   ├── seeders/
+│   └── factories/
 ├── public/
 │   ├── index.php
 │   └── .htaccess
 ├── tests/
 ├── vendor/
-├── flexify                   ← CLI tool dengan HMF compatibility
+├── fusion                    ← CLI executable
 ├── bootstrap.php
 ├── composer.json
 ├── phpunit.xml
@@ -598,7 +586,7 @@ php -S localhost:8000 -t public
 
 ```php
 // app/modules/Blog/routes.php
-use Fusion\Core\Router;
+use Fusion\Router;
 
 $router = new Router();
 
@@ -620,9 +608,9 @@ $router->group(['prefix' => '/api', 'middleware' => ['AuthMiddleware']], functio
 <?php
 namespace App\Modules\Blog\Controllers;
 
-use Fusion\Core\Controller;
-use Fusion\Core\Request;
-use Fusion\Core\Response;
+use Fusion\Controller;
+use Fusion\Request;
+use Fusion\Response;
 
 class PostController extends Controller
 {
@@ -653,7 +641,7 @@ class PostController extends Controller
 <?php
 namespace App\Modules\Blog\Models;
 
-use Fusion\Core\Model;
+use Fusion\Model;
 
 class Post extends Model
 {
@@ -690,7 +678,7 @@ class Post extends Model
 <?php
 namespace App\Modules\Blog\Services;
 
-use Fusion\Core\Service;
+use Fusion\Service;
 
 class PostService extends Service
 {
@@ -725,7 +713,7 @@ class PostService extends Service
 <?php
 namespace App\Modules\Blog\Repositories;
 
-use Fusion\Core\Repository;
+use Fusion\Repository;
 
 class PostRepository extends Repository
 {
@@ -933,7 +921,7 @@ QUEUE_TIMEOUT=60           # Job timeout in seconds
 // app/Jobs/SendEmailJob.php
 namespace App\Jobs;
 
-use Fusion\Core\Queue\Job;
+use Fusion\Queue\Job;
 
 class SendEmailJob extends Job
 {
@@ -1226,7 +1214,7 @@ Fusion Framework memiliki sistem plugin yang powerful:
 // plugins/MyPlugin/MyPlugin.php
 namespace Plugins\MyPlugin;
 
-use Fusion\Core\Plugin\PluginInterface;
+use Fusion\Plugin\PluginInterface;
 
 class MyPlugin implements PluginInterface
 {
@@ -1259,9 +1247,9 @@ class MyPlugin implements PluginInterface
 // app/Middleware/AuthMiddleware.php
 namespace App\Middleware;
 
-use Fusion\Core\Middleware;
-use Fusion\Core\Request;
-use Fusion\Core\Response;
+use Fusion\Middleware;
+use Fusion\Request;
+use Fusion\Response;
 
 class AuthMiddleware extends Middleware
 {
@@ -1287,7 +1275,7 @@ class AuthMiddleware extends Middleware
 ```php
 <?php
 // database/migrations/20231201120000_create_users_table.php
-use Fusion\Core\Database\Migration;
+use Fusion\Database\Migration;
 
 class CreateUsersTable extends Migration
 {
@@ -1345,7 +1333,7 @@ class UserSeeder
 ```php
 <?php
 // Using cache in your application
-use Fusion\Core\Cache\CacheManager;
+use Fusion\Cache\CacheManager;
 
 $cache = CacheManager::getInstance();
 
@@ -1372,7 +1360,7 @@ $cache->flush();
 ```php
 <?php
 // Using authentication
-use Fusion\Core\Auth\AuthManager;
+use Fusion\Auth\AuthManager;
 
 $auth = AuthManager::getInstance();
 

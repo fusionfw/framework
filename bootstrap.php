@@ -21,31 +21,31 @@ define('FUSION_VERSION', '1.1.0');
 define('FUSION_FRAMEWORK', 'Fusion Framework');
 
 // Load autoloader
-require_once __DIR__ . '/core/Autoloader.php';
-require_once __DIR__ . '/core/FusionAliases.php';
+require_once __DIR__ . '/src/Autoloader.php';
+require_once __DIR__ . '/src/FusionAliases.php';
 
 // Register autoloader
-use Fusion\Core\Autoloader;
+use Fusion\Autoloader;
 
 Autoloader::register();
 
 // Add namespace mappings
-Autoloader::addNamespace('Fusion\\Core', __DIR__ . '/core');
+Autoloader::addNamespace('Fusion', __DIR__ . '/src');
 Autoloader::addNamespace('App', __DIR__ . '/app');
 
 // Load environment variables
 if (file_exists(BASE_PATH . '/.env')) {
-    $env = new \Fusion\Core\Config(__DIR__ . '/config');
+    $env = new \Fusion\Config(__DIR__ . '/config');
     $env->loadEnv();
 }
 
 // Initialize Fusion Framework
 try {
     // Load configuration
-    $config = new \Fusion\Core\Config(__DIR__ . '/config');
+    $config = new \Fusion\Config(__DIR__ . '/config');
 
     // Initialize container
-    $container = \Fusion\Core\Container::getInstance();
+    $container = \Fusion\Container::getInstance();
 
     // Register core services
     $container->singleton('config', function () use ($config) {
@@ -53,26 +53,26 @@ try {
     });
 
     $container->singleton('logger', function () use ($config) {
-        return new \Fusion\Core\Logger($config->get('app.log_path', __DIR__ . '/../storage/logs'));
+        return new \Fusion\Logger($config->get('app.log_path', __DIR__ . '/../storage/logs'));
     });
 
     $container->singleton('cache', function () use ($config) {
-        return new \Fusion\Core\Cache\CacheManager($config);
+        return new \Fusion\Cache\CacheManager($config);
     });
 
     $container->singleton('session', function () use ($config) {
-        return new \Fusion\Core\Session\SessionManager($config);
+        return new \Fusion\Session\SessionManager($config);
     });
 
     $container->singleton('auth', function () use ($config) {
-        return new \Fusion\Core\Auth\AuthManager($config);
+        return new \Fusion\Auth\AuthManager($config);
     });
 
     // Initialize database connection
     $dbConfig = $config->get('database', []);
     if (!empty($dbConfig)) {
         $container->singleton('database', function () use ($dbConfig) {
-            return new \Fusion\Core\Database\Connection($dbConfig);
+            return new \Fusion\Database\Connection($dbConfig);
         });
     }
 
@@ -80,7 +80,7 @@ try {
     try {
         $container->singleton('plugin_manager', function () use ($container, $config) {
             $logger = $container->make('logger');
-            return new \Fusion\Core\Plugin\PluginManager($container, $logger, $config);
+            return new \Fusion\Plugin\PluginManager($container, $logger, $config);
         });
     } catch (\Exception $e) {
         // Plugin manager not available, continue without it
@@ -92,7 +92,7 @@ try {
 
     // Log framework initialization
     // Initialize dual-mode Application
-    $app = \Fusion\Core\Application::getInstance();
+    $app = \Fusion\Application::getInstance();
     $mode = $app->getMode();
 
     $logger = $container->make('logger');

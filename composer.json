@@ -1,12 +1,12 @@
 {
-    "name": "fusion/framework",
+    "name": "mwpn/fusion-framework",
     "description": "Fusion Framework - Simple to Start, Powerful to Scale. Hybrid MVC, Modular Architecture, Service Layer, and Enterprise Queue System.",
     "type": "project",
     "license": "MIT",
     "authors": [
         {
             "name": "Fusion Team",
-            "email": "team@btekno.cloud"
+            "email": "fusion@btekno.cloud"
         }
     ],
     "require": {

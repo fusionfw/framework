@@ -1,5 +1,5 @@
 {
-    "name": "mwpn/fusion-framework",
+    "name": "fusionfw/framework",
     "description": "Fusion Framework - Simple to Start, Powerful to Scale. Hybrid MVC, Modular Architecture, Service Layer, and Enterprise Queue System.",
     "type": "project",
     "license": "MIT",
@@ -12,8 +12,8 @@
     "require": {
         "php": ">=8.0",
         "predis/predis": "^2.0",
-        "pheanstalk/pheanstalk": "^4.0",
-        "php-amqplib/php-amqplib": "^3.0",
+        "pda/pheanstalk": "^4.0",
+        "php-amqplib/php-amqplib": "^3.7",
         "aws/aws-sdk-php": "^3.0"
     },
     "require-dev": {

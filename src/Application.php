@@ -84,6 +84,16 @@ class Application
 
         // Process the request through router
         $router = new Router();
+
+        // Add default routes
+        $router->get('/', function () {
+            return new Response('<h1>Fusion Framework - HMS SaaS</h1><p>Framework berhasil berjalan!</p>');
+        });
+
+        $router->get('/health', function () {
+            return (new Response())->json(['status' => 'ok', 'framework' => 'Fusion', 'version' => '1.1.0']);
+        });
+
         $response = $router->dispatch($request);
 
         // Send response

@@ -1,0 +1,133 @@
+<?php
+
+namespace Fusion\Core;
+
+use Fusion\Core\Container;
+use Fusion\Core\Config;
+use Fusion\Core\Logger;
+
+class Application
+{
+    private static ?Application $instance = null;
+
+    private string $mode; // lite | enterprise
+
+    private Container $container;
+
+    private Config $config;
+
+    private function __construct()
+    {
+        $this->container = Container::getInstance();
+        $this->config = new Config(dirname(__DIR__, 1) . '/config');
+        $this->mode = getenv('APP_MODE') ?: 'lite';
+        $this->mode = strtolower($this->mode) === 'enterprise' ? 'enterprise' : 'lite';
+        $this->bootstrap();
+    }
+
+    public static function getInstance(): Application
+    {
+        if (!self::$instance) {
+            self::$instance = new Application();
+        }
+        return self::$instance;
+    }
+
+    public static function resetInstance(): void
+    {
+        self::$instance = null;
+    }
+
+    public function getMode(): string
+    {
+        return $this->mode;
+    }
+
+    public function getConfig(): Config
+    {
+        return $this->config;
+    }
+
+    public function getLogger(): Logger
+    {
+        return $this->container->make('logger');
+    }
+
+    public function getContainer(): Container
+    {
+        return $this->container;
+    }
+
+    private function bootstrap(): void
+    {
+        // Register Application instance
+        $this->container->singleton(Application::class, function () {
+            return $this;
+        });
+
+        // Register config
+        $this->container->singleton('config', function () {
+            return $this->config;
+        });
+
+        // Common services for both modes
+        $this->container->singleton('logger', function () {
+            return new Logger($this->config->get('app.log_path', dirname(__DIR__, 2) . '/storage/logs'));
+        });
+
+        // Register migrator service
+        $this->container->singleton('migrator', function () {
+            $connection = Database\Connection::getInstance();
+            $logger = $this->container->make('logger');
+            return new Database\Migrator($connection, $logger);
+        });
+
+        // Register queue manager service
+        $this->container->singleton('queue', function () {
+            return new Queue\QueueManager($this->config);
+        });
+
+        // Minimal services for lite mode
+        if ($this->mode === 'lite') {
+            // Only minimal services
+            $this->initDatabaseIfConfigured();
+            return;
+        }
+
+        // Enterprise services
+        $this->container->singleton('cache', function () {
+            return new Cache\CacheManager($this->config);
+        });
+
+        $this->container->singleton('session', function () {
+            return new Session\SessionManager($this->config);
+        });
+
+        $this->container->singleton('auth', function () {
+            return new Auth\AuthManager($this->config);
+        });
+
+        $this->initDatabaseIfConfigured();
+
+        // Plugin system is enterprise-only
+        try {
+            $this->container->singleton('plugin_manager', function () {
+                $logger = $this->container->make('logger');
+                return new Plugin\PluginManager($this->container, $logger, $this->config);
+            });
+        } catch (\Throwable $e) {
+            $logger = $this->container->make('logger');
+            $logger->warning('Plugin manager not available: ' . $e->getMessage());
+        }
+    }
+
+    private function initDatabaseIfConfigured(): void
+    {
+        $dbConfig = $this->config->get('database', []);
+        if (!empty($dbConfig)) {
+            $this->container->singleton('database', function () {
+                return Database\Connection::getInstance();
+            });
+        }
+    }
+}

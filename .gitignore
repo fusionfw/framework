@@ -1,0 +1,49 @@
+# Dependencies
+/vendor/
+/node_modules/
+
+# Environment
+.env
+.env.local
+.env.production
+
+# Storage
+/storage/logs/*.log
+/storage/cache/*
+!/storage/cache/.gitkeep
+/storage/queue/*.json
+!/storage/queue/.gitkeep
+
+# Database
+*.sqlite
+*.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+
+# Build
+/build/
+/dist/
+
+# Testing
+/coverage/
+/phpunit.xml.cache
+
+# Composer
+composer.phar
+composer.lock
+
+# Backup files
+*.bak
+*.backup

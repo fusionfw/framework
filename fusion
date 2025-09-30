@@ -1,0 +1,11 @@
+#!/usr/bin/env php
+<?php
+
+// Load bootstrap
+require_once __DIR__ . '/bootstrap.php';
+
+// Run console
+use Fusion\Core\Console;
+
+$console = new Console();
+$console->run();

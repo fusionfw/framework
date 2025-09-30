@@ -1146,12 +1146,14 @@ Fusion Framework dirancang untuk performa tinggi:
 ### Benchmark Results
 
 **Test Environment:**
+
 - PHP 8.1.0
 - 8GB RAM
 - Intel i7-10700K
 - Ubuntu 20.04 LTS
 
 **Basic Routing Performance:**
+
 ```
 Test: Simple Route (GET /)
 Requests: 10,000
@@ -1164,6 +1166,7 @@ Memory Usage: 2.1MB
 ```
 
 **Database Operations:**
+
 ```
 Test: Model CRUD Operations
 Requests: 5,000
@@ -1176,6 +1179,7 @@ Memory Usage: 3.2MB
 ```
 
 **Queue Performance:**
+
 ```
 Test: Queue Push/Pop (File Driver)
 Operations: 10,000
@@ -1186,6 +1190,7 @@ Memory Usage: 1.8MB
 ```
 
 **Cache Performance:**
+
 ```
 Test: Cache Set/Get (File Cache)
 Operations: 20,000
@@ -1196,6 +1201,7 @@ Memory Usage: 1.5MB
 ```
 
 **Memory Usage Comparison:**
+
 ```
 Framework Startup:
 - Fusion Framework: 2.1MB

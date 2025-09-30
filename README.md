@@ -43,13 +43,14 @@ QUEUE_DRIVER=file
 
 ## 📊 System Requirements
 
-| Requirement | Minimum | Recommended |
-| ----------- | ------- | ----------- |
-| **PHP Version** | 8.0+ | 8.1+ |
-| **Memory** | 128MB | 256MB+ |
-| **Extensions** | PDO, JSON, OpenSSL | All standard extensions |
-| **OS** | Linux, macOS, Windows | Linux (production) |
-| **Web Server** | Apache, Nginx | Nginx (production) |
+| Requirement     | Minimum               | Recommended             |
+| --------------- | --------------------- | ----------------------- |
+| **PHP Version** | 8.0+                  | 8.1+                    |
+| **Memory**      | 128MB                 | 256MB+                  |
+| **Extensions**  | PDO, JSON, OpenSSL    | All standard extensions |
+| **Database**    | MySQL 5.7+, SQLite 3, PostgreSQL 10+ | MySQL 8.0+, PostgreSQL 13+ |
+| **OS**          | Linux, macOS, Windows | Linux (production)      |
+| **Web Server**  | Apache, Nginx         | Nginx (production)      |
 
 ## 🚀 Quick Start
 
@@ -853,6 +854,14 @@ DB_PORT=3306
 DB_DATABASE=fusion_framework
 DB_USERNAME=root
 DB_PASSWORD=
+
+# PostgreSQL
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=fusion_framework
+DB_USERNAME=postgres
+DB_PASSWORD=your_password
 ```
 
 ### Migration Commands

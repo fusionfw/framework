@@ -91,6 +91,10 @@ class Connection
             return "sqlite:" . $config['database'];
         }
 
+        if ($driver === 'pgsql') {
+            return "pgsql:host={$host};port={$port};dbname={$database}";
+        }
+
         return "{$driver}:host={$host};port={$port};dbname={$database};charset={$charset}";
     }
 

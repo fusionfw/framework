@@ -96,6 +96,22 @@ php fusion serve
 http://localhost:8000
 ```
 
+### **Application Initialization**
+
+```php
+<?php
+// public/index.php
+use Fusion\Application;
+
+// Recommended way - clean and simple
+$app = Application::boot();
+$app->run();
+
+// Alternative alias method
+$app = Application::create();
+$app->run();
+```
+
 ### **Create Your First Module**
 
 ```bash
@@ -338,6 +354,24 @@ php fusion enterprise benchmark
 ```
 
 ### **Basic Usage**
+
+**Application Initialization:**
+
+```php
+use Fusion\Application;
+
+// Recommended way - using static factory method
+$app = Application::boot();
+$app->run();
+
+// Alternative alias method
+$app = Application::create();
+$app->run();
+
+// Legacy method (still works but not recommended)
+$app = Application::getInstance();
+$app->run();
+```
 
 **Controller Example:**
 

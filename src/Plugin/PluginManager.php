@@ -2,9 +2,9 @@
 
 namespace Fusion\Plugin;
 
-use Fusion\\Container;
-use Fusion\\Logger;
-use Fusion\\Config;
+use Fusion\Container;
+use Fusion\Logger;
+use Fusion\Config;
 
 /**
  * Plugin Manager

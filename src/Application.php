@@ -5,6 +5,9 @@ namespace Fusion;
 use Fusion\Container;
 use Fusion\Config;
 use Fusion\Logger;
+use Fusion\Request;
+use Fusion\Response;
+use Fusion\Router;
 
 class Application
 {
@@ -33,6 +36,19 @@ class Application
         return self::$instance;
     }
 
+    public static function boot(): self
+    {
+        if (!self::$instance) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+
+    public static function create(): self
+    {
+        return self::boot();
+    }
+
     public static function resetInstance(): void
     {
         self::$instance = null;
@@ -58,6 +74,22 @@ class Application
         return $this->container;
     }
 
+    public function run(): void
+    {
+        // Start the application
+        $this->getLogger()->info('Application started');
+
+        // Handle the request
+        $request = new Request();
+
+        // Process the request through router
+        $router = new Router();
+        $response = $router->dispatch($request);
+
+        // Send response
+        $response->send();
+    }
+
     private function bootstrap(): void
     {
         // Register Application instance
@@ -77,7 +109,7 @@ class Application
 
         // Register migrator service
         $this->container->singleton('migrator', function () {
-            $connection = Database\Connection::getInstance();
+            $connection = Database\Connection::getInstance() ?? throw new \RuntimeException('Database connection failed');
             $logger = $this->container->make('logger');
             return new Database\Migrator($connection, $logger);
         });
@@ -96,7 +128,8 @@ class Application
 
         // Enterprise services
         $this->container->singleton('cache', function () {
-            return new Cache\CacheManager($this->config);
+            $logger = $this->container->make('logger');
+            return new Cache\CacheManager($this->config, $logger);
         });
 
         $this->container->singleton('session', function () {
@@ -104,7 +137,10 @@ class Application
         });
 
         $this->container->singleton('auth', function () {
-            return new Auth\AuthManager($this->config);
+            $session = $this->container->make('session');
+            $cache = $this->container->make('cache');
+            $logger = $this->container->make('logger');
+            return new Auth\AuthManager($session, $cache, $logger);
         });
 
         $this->initDatabaseIfConfigured();

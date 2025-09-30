@@ -4,8 +4,8 @@ namespace Fusion\Database;
 
 use PDO;
 use PDOException;
-use Fusion\\Config;
-use Fusion\\Logger;
+use Fusion\Config;
+use Fusion\Logger;
 
 /**
  * Database Connection Manager

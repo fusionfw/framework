@@ -2,10 +2,10 @@
 
 namespace Fusion\Auth;
 
-use Fusion\\Session\SessionManager;
-use Fusion\\Cache\CacheManager;
-use Fusion\\Security;
-use Fusion\\Logger;
+use Fusion\Session\SessionManager;
+use Fusion\Cache\CacheManager;
+use Fusion\Security;
+use Fusion\Logger;
 
 /**
  * Authentication Manager

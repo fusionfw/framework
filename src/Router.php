@@ -2,8 +2,8 @@
 
 namespace Fusion;
 
-use Fusion\\Request;
-use Fusion\\Response;
+use Fusion\Request;
+use Fusion\Response;
 
 /**
  * Simple Router Class

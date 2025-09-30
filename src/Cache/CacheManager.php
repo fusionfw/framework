@@ -2,8 +2,8 @@
 
 namespace Fusion\Cache;
 
-use Fusion\\Config;
-use Fusion\\Logger;
+use Fusion\Config;
+use Fusion\Logger;
 
 /**
  * Cache Manager

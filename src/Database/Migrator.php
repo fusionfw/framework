@@ -2,8 +2,8 @@
 
 namespace Fusion\Database;
 
-use Fusion\\Database\Connection;
-use Fusion\\Logger;
+use Fusion\Database\Connection;
+use Fusion\Logger;
 use PDO;
 
 /**

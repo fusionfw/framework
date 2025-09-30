@@ -2,7 +2,7 @@
 
 namespace Fusion\Session;
 
-use Fusion\\Config;
+use Fusion\Config;
 
 /**
  * Session Manager
